@@ -1,0 +1,16 @@
+from app.models.user import User
+from app.models.contact import Contact
+from app.models.conversation import Conversation, ConversationParticipant
+from app.models.message import Message, MessageStatus, MessageReaction
+from app.models.attachment import Attachment
+
+__all__ = [
+    "User",
+    "Contact",
+    "Conversation",
+    "ConversationParticipant",
+    "Message",
+    "MessageStatus",
+    "MessageReaction",
+    "Attachment",
+]
