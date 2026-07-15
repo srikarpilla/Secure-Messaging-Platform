@@ -7,5 +7,5 @@ from flask_cors import CORS
 db = SQLAlchemy()
 migrate = Migrate()
 jwt = JWTManager()
-socketio = SocketIO(async_mode="eventlet")
+socketio = SocketIO(async_mode="gevent")
 cors = CORS()
