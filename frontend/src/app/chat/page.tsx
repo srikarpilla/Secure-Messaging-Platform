@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useChatStore } from '@/store/chatStore';
 import { connectSocket, disconnectSocket } from '@/lib/socket';
-import type { Message, Conversation } from '@/types';
+import type { Message, Conversation, MessageStatusEnum } from '@/types';
 import ConversationList from '@/components/ConversationList';
 import ChatWindow from '@/components/ChatWindow';
 import NewChatModal from '@/components/NewChatModal';
@@ -75,7 +75,7 @@ export default function ChatPage() {
       });
     });
 
-    socket.on('message:status_update', (data: { conversation_id: number; message_id: number; user_id: number; status: string }) => {
+    socket.on('message:status_update', (data: { conversation_id: number; message_id: number; user_id: number; status: MessageStatusEnum }) => {
       updateMessageStatus(data.conversation_id, data.message_id, data.user_id, data.status);
     });
 
