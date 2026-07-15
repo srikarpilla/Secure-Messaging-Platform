@@ -190,7 +190,7 @@ export default function ConversationList({ onNewChat, onNewGroup }: Props) {
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <span style={{ fontWeight: 600, fontSize: 14, truncate: true }}>{name}</span>
+                  <span style={{ fontWeight: 600, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 160 }}>{name}</span>
                   <span style={{ fontSize: 11, color: 'var(--signal-muted)', flexShrink: 0, marginLeft: 8 }}>
                     {formatTime(conv.last_message?.created_at || conv.updated_at)}
                   </span>
