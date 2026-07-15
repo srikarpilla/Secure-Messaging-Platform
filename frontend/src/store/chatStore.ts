@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { User, Conversation, Message, TypingState } from '@/types';
+import type { User, Conversation, Message, TypingState, MessageStatusEnum } from '@/types';
 
 const API = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
 
@@ -34,7 +34,7 @@ interface ChatState {
   setMessages: (convId: number, msgs: Message[]) => void;
   prependMessages: (convId: number, msgs: Message[]) => void;
   addMessage: (msg: Message) => void;
-  updateMessageStatus: (convId: number, messageId: number, userId: number, status: string) => void;
+  updateMessageStatus: (convId: number, messageId: number, userId: number, status: MessageStatusEnum) => void;
   updateMessage: (msg: Message) => void;
 
   // Typing
