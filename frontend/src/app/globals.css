@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Signal-inspired colour tokens */
+  --signal-blue: #3a76f0;
+  --signal-blue-hover: #2d62d6;
+  --signal-navy: #1b1d27;
+  --signal-sidebar: #1e2030;
+  --signal-panel: #252837;
+  --signal-input-bg: #2d3048;
+  --signal-bubble-sent: #3a76f0;
+  --signal-bubble-recv: #2d3048;
+  --signal-border: rgba(255,255,255,0.07);
+  --signal-text: #e8eaf0;
+  --signal-muted: #8b90a0;
+  --signal-online: #4ade80;
+  --signal-delivered: #8b90a0;
+  --signal-read: #3a76f0;
+  --signal-unread-badge: #ef4444;
+  --signal-hover: rgba(255,255,255,0.05);
+
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--signal-navy);
+  color: var(--signal-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(0.8); opacity: 0.6; }
+  50%       { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.2s ease-out;
+}
+
+/* Typing dots */
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal-muted);
+  display: inline-block;
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--signal-input-bg) 25%,
+    rgba(255,255,255,0.05) 50%,
+    var(--signal-input-bg) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* Message bubble tail */
+.bubble-sent {
+  border-radius: 18px 18px 4px 18px;
+  background: var(--signal-bubble-sent);
+  color: #fff;
+}
+.bubble-recv {
+  border-radius: 18px 18px 18px 4px;
+  background: var(--signal-bubble-recv);
+  color: var(--signal-text);
+}
+.bubble-sent-tail {
+  border-radius: 18px 18px 2px 18px;
+}
+.bubble-recv-tail {
+  border-radius: 18px 18px 18px 2px;
+}
+
+/* Input styles */
+.signal-input {
+  background: var(--signal-input-bg);
+  border: 1px solid var(--signal-border);
+  border-radius: 12px;
+  color: var(--signal-text);
+  padding: 12px 16px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+  font-size: 14px;
+}
+.signal-input:focus {
+  border-color: var(--signal-blue);
+}
+.signal-input::placeholder {
+  color: var(--signal-muted);
+}
+
+/* Button */
+.signal-btn {
+  background: var(--signal-blue);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  font-family: inherit;
+}
+.signal-btn:hover {
+  background: var(--signal-blue-hover);
+}
+.signal-btn:active {
+  transform: scale(0.98);
+}
+.signal-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Avatar */
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.avatar-placeholder {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* Status ticks */
+.tick-sent    { color: var(--signal-delivered); }
+.tick-delivered { color: var(--signal-delivered); }
+.tick-read    { color: var(--signal-read); }
+
+/* Unread badge */
+.unread-badge {
+  background: var(--signal-unread-badge);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+}
+
+/* Online dot */
+.online-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--signal-online);
+  border-radius: 50%;
+  border: 2px solid var(--signal-sidebar);
+}
+
+/* Hover row */
+.conv-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-radius: 8px;
+}
+.conv-row:hover {
+  background: var(--signal-hover);
+}
+.conv-row.active {
+  background: rgba(58, 118, 240, 0.15);
+}
+
+/* Glass panel */
+.glass-panel {
+  background: rgba(30, 32, 48, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--signal-border);
+}
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  backdrop-filter: blur(4px);
+}
+.modal-panel {
+  background: var(--signal-panel);
+  border: 1px solid var(--signal-border);
+  border-radius: 20px;
+  padding: 28px;
+  width: 420px;
+  max-width: 95vw;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--signal-border);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--signal-panel);
+  border: 1px solid var(--signal-border);
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 13px;
+  z-index: 100;
+  animation: fadeIn 0.2s ease-out;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* Reaction pill */
+.reaction-pill {
+  background: var(--signal-input-bg);
+  border: 1px solid var(--signal-border);
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.reaction-pill:hover {
+  background: rgba(58,118,240,0.2);
+  border-color: var(--signal-blue);
+}
+
+/* Reply preview strip */
+.reply-strip {
+  border-left: 3px solid var(--signal-blue);
+  padding: 6px 10px;
+  background: rgba(58,118,240,0.1);
+  border-radius: 0 8px 8px 0;
+  font-size: 12px;
+  color: var(--signal-muted);
+}
