@@ -11,7 +11,8 @@ interface Props {
 
 function formatTime(ts: string | null | undefined): string {
   if (!ts) return '';
-  const d = new Date(ts);
+  const dateStr = ts.endsWith('Z') ? ts : ts + 'Z';
+  const d = new Date(dateStr);
   const now = new Date();
   const diffDays = Math.floor((now.getTime() - d.getTime()) / 86400000);
   if (diffDays === 0) return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });

@@ -14,7 +14,8 @@ interface Props {
 }
 
 function formatTime(ts: string): string {
-  return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const dateStr = ts.endsWith('Z') ? ts : ts + 'Z';
+  return new Date(dateStr).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
 function StatusTick({ statuses }: { statuses: Message['statuses'] }) {
