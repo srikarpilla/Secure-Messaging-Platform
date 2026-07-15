@@ -1,11 +1,13 @@
 import os
-from flask import Flask
+from flask import Flask, send_from_directory
 from config import config
 from app.extensions import db, migrate, jwt, socketio, cors
 
 
 def create_app(config_name: str = "default") -> Flask:
-    app = Flask(__name__)
+    frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "out"))
+    
+    app = Flask(__name__, static_folder=frontend_dir, static_url_path="/")
     app.config.from_object(config[config_name])
 
     # Ensure upload folder exists
@@ -44,5 +46,23 @@ def create_app(config_name: str = "default") -> Flask:
     @app.route("/api/health")
     def health():
         return {"status": "ok"}, 200
+
+    @app.route("/", defaults={"path": ""})
+    @app.route("/<path:path>")
+    def serve_frontend(path):
+        # Serve exact file if it exists (e.g. /_next/static/...)
+        if path != "" and os.path.exists(os.path.join(frontend_dir, path)):
+            return send_from_directory(frontend_dir, path)
+            
+        # Serve Next.js trailingSlash: true page (e.g. /chat -> /chat/index.html)
+        if path != "" and os.path.exists(os.path.join(frontend_dir, path, "index.html")):
+            return send_from_directory(frontend_dir, os.path.join(path, "index.html"))
+            
+        # Serve Next.js trailingSlash: false page (e.g. /chat -> /chat.html)
+        if path != "" and os.path.exists(os.path.join(frontend_dir, path + ".html")):
+            return send_from_directory(frontend_dir, path + ".html")
+
+        # Fallback to root index.html
+        return send_from_directory(frontend_dir, "index.html")
 
     return app

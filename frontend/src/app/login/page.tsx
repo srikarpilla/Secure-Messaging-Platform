@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useChatStore } from '@/store/chatStore';
 
-const API = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+const API = process.env.NEXT_PUBLIC_BACKEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000');
 
 export default function LoginPage() {
   const router = useRouter();

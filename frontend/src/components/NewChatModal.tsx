@@ -9,7 +9,7 @@ interface Props {
   onConversationCreated: (convId: number) => void;
 }
 
-const API = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+const API = process.env.NEXT_PUBLIC_BACKEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000');
 
 export default function NewChatModal({ onClose, onConversationCreated }: Props) {
   const { apiFetch, upsertConversation, user } = useChatStore();

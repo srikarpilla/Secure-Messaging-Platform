@@ -1,11 +1,9 @@
 services:
-  # ── Backend: Flask + Flask-SocketIO ──────────────────────────────────────
   - type: web
-    name: signalchat-backend
+    name: signalchat-monolith
     runtime: python
-    rootDir: backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: python start.py
+    buildCommand: ./build.sh
+    startCommand: cd backend && python start.py
     envVars:
       - key: FLASK_ENV
         value: production
@@ -17,26 +15,9 @@ services:
         value: /opt/render/project/src/data
       - key: UPLOAD_FOLDER
         value: /opt/render/project/src/data/uploads
-      # Set CORS_ORIGINS to your frontend URL after first deploy:
-      # - key: CORS_ORIGINS
-      #   value: https://signalchat-frontend.onrender.com
+      - key: NODE_VERSION
+        value: "20.11.0"
     disk:
       name: signalchat-data
       mountPath: /opt/render/project/src/data
       sizeGB: 1
-
-  # ── Frontend: Next.js ─────────────────────────────────────────────────────
-  - type: web
-    name: signalchat-frontend
-    runtime: node
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    startCommand: npm start
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: PORT
-        value: "3000"
-      # Set this to your backend Render URL after first deploy:
-      - key: NEXT_PUBLIC_BACKEND_URL
-        value: https://signalchat-backend.onrender.com

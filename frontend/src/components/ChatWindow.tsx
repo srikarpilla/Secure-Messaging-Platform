@@ -7,7 +7,7 @@ import MessageBubble from './MessageBubble';
 import GroupInfoPanel from './GroupInfoPanel';
 import Avatar from './Avatar';
 
-const API = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+const API = process.env.NEXT_PUBLIC_BACKEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000');
 const EMOJIS = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
 
 interface Props {

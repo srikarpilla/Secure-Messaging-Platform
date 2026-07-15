@@ -19,7 +19,7 @@ interface AvatarProps {
   isOnline?: boolean;
 }
 
-const API = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+const API = process.env.NEXT_PUBLIC_BACKEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000');
 
 export default function Avatar({ url, name, size = 40, showOnline, isOnline }: AvatarProps) {
   const initials = name
