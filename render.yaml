@@ -17,7 +17,3 @@ services:
         value: /opt/render/project/src/data/uploads
       - key: NODE_VERSION
         value: "20.11.0"
-    disk:
-      name: signalchat-data
-      mountPath: /opt/render/project/src/data
-      sizeGB: 1
